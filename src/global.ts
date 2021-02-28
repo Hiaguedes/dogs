@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
 
     a { 
         text-decoration: none;
+        color: black;
     }
 
     body { 
@@ -26,6 +27,18 @@ const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
         max-height: 100%;
         background-color: ${({theme}) => theme.bg};
         color: ${({theme}) => theme.color};
+    }
+
+    ul, li {
+        list-style: none;
+    }
+
+    img { 
+        max-width: 100%;
+    }
+
+    button { 
+        display: inline-block;
     }
 `;
 
