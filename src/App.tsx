@@ -12,18 +12,14 @@ function App() {
 
   return (
     <ThemeProvider theme={theme.light}>
-    <GlobalStyle />
-    <BrowserRouter>
-    <Header />
-    <Routes>
-      <Route path="/">
-        <Home />
-      </Route>
-      <Route path="/login">
-        <Login />     
-      </Route>
-    </Routes>
-    </BrowserRouter>
+      <GlobalStyle />
+      <BrowserRouter>
+      <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login/*" element={<Login /> }/>
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
