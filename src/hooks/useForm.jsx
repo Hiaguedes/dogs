@@ -7,12 +7,12 @@ const validations = {
     }
 }
 
-const useForm = (initialState: any) => {
-    const [value, setValue] = React.useState<typeof initialState>(initialState);
+const useForm = (initialState) => {
+    const [value, setValue] = React.useState(initialState);
     const [erro, setErro] = React.useState(initialState);
 
     
-    const validate = React.useCallback(({target}: InputEvent) => {
+    const validate = React.useCallback(({target}) => {
         const name = target.name;
         const value = target.value;
         
@@ -28,7 +28,7 @@ const useForm = (initialState: any) => {
         return;
     },[initialState, erro])
     
-    const Change = (e: any) => {
+    const Change = (e) => {
         validate(e);
         const name = e.target.name;
         setValue({...value, [name] : e.target.value})
