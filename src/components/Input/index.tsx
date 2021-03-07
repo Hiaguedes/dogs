@@ -6,7 +6,7 @@ interface InputProps {
     errorMessage?: string;
     placeholder?: string
     value?: string;
-    type: string;
+    type?: string;
     onBlur: (e: any) => any;
     onChange: (e: any) => any;
 }
