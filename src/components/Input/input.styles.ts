@@ -12,7 +12,7 @@ const InputBase = styled.input<InputProps>`
     padding: 0.2rem 0.5rem;
     height: 2rem;
     font-size: 1.2rem;
-    width: 30%;
+    width: 95%;
     margin: 1rem 0.5rem;
     display: flex;
     align-items: center;

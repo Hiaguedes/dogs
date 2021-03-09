@@ -4,7 +4,8 @@ import Button from '../../components/Button'
 import { routes } from '../../utils/apiRoute';
 import useFetch from '../../hooks/useFetch';
 import useForm from '../../hooks/useForm';
-import { useLoginContext } from '../../contexts/LoginContext'
+import { useLoginContext } from '../../contexts/LoginContext';
+import { createBrowserHistory } from 'history'
 
 const LoginUser = () => {
     const initialState = {
@@ -15,11 +16,17 @@ const LoginUser = () => {
     const { token,setLoginToken, setUser } = useLoginContext();
     const [ value, erro , Change, validate  ] = useForm(initialState);
     const { username, password } = value;
+    const history = createBrowserHistory();
+
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
         Object.values(erro).some(value => value) ? console.log('existe erro') :
-        request(routes.TokenPost.url,routes.TokenPost.options(value)).then(res => {setLoginToken(res.json.token)})
+        request(routes.TokenPost.url,routes.TokenPost.options(value)).then(res => {
+            setLoginToken(res.json.token);
+            localStorage.setItem('dogsToken', res.json.token);
+            history.push('/home')
+        })
     }
 
     React.useEffect(() => {

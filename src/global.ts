@@ -8,6 +8,7 @@ interface GlobalStylesProps {
 }
 
 const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
+
     * {
         margin: 0;
         padding: 0;

@@ -36,7 +36,18 @@ export const routes = {
             }
             }
         }
-    }
+    },
+    validateToken: {
+        url: `${apiRoute}/jwt-auth/v1/token/validate`,
+        options: (token: any) => {
+            return {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+            }
+        }
+    },
 }
 
 

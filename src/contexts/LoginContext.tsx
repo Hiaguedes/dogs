@@ -1,4 +1,7 @@
 import React from 'react';
+import useFetch from '../hooks/useFetch';
+import { routes } from '../utils/apiRoute';
+import { createBrowserHistory } from 'history'
 
 const initialState = {
     token: '',
@@ -9,7 +12,8 @@ const initialState = {
         email: '',
     },
     setLoginToken: (token: string) => {},
-    setUser: (objUser: {}) => {}
+    setUser: (objUser: {}) => {},
+    logOut: () => {},
 }
 interface DefaultProps {
     token: string;
@@ -21,6 +25,7 @@ interface DefaultProps {
     };
     setLoginToken: (token: string) => void;
     setUser: (objUser: {}) => void;
+    logOut: () => void;
 }
 
 interface LoginProviderProps {
@@ -30,6 +35,7 @@ interface LoginProviderProps {
 const LoginContext = React.createContext<DefaultProps>(initialState);
 
 const LoginProvider = ({children}: LoginProviderProps) => {
+    const { request } = useFetch();
     const [token, setToken] =React.useState('');
     const [userData, setUserData] = React.useState({
         id: '',
@@ -37,6 +43,7 @@ const LoginProvider = ({children}: LoginProviderProps) => {
         nome: '',
         email: '',
     })
+    const history = createBrowserHistory();
 
     const setLoginToken = (token: string) => {
         setToken(token);
@@ -46,8 +53,48 @@ const LoginProvider = ({children}: LoginProviderProps) => {
         setUserData({...userData, ...objUser})
     }
 
+    const logOut = () => {
+        setToken('');
+        setUserData({
+            id: '',
+            username: '',
+            nome: '',
+            email: '',
+        });
+        localStorage.removeItem('dogsToken');
+        history.push('/login')
+    }
+
+    React.useEffect(() => {
+        const appToken = localStorage.getItem('dogsToken');
+
+        if(appToken) {
+            try {
+                request(routes.validateToken.url, routes.validateToken.options(appToken))
+                .then((res: {response: any}) => {
+                    if(!res.response.ok as boolean) {
+                        logOut();
+                        history.push('/login')
+                        return
+                    };
+                    setLoginToken(appToken);
+                    request(routes.getUser.url,routes.getUser.options(appToken)).then(res => {
+                        setUser(res.json)
+                        history.push('/home')
+                    })
+                })
+
+            }
+            catch(e) {
+                console.error(e)
+                logOut();
+            }
+        }
+        // eslint-disable-next-line
+    }, [request])
+
     return(
-        <LoginContext.Provider value={{token, setLoginToken, userData ,setUser}}>
+        <LoginContext.Provider value={{token, setLoginToken, userData ,setUser, logOut}}>
             {children}
         </LoginContext.Provider>
     )
