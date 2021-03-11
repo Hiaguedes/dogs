@@ -1,14 +1,14 @@
-import React from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
-import useHead from '../../hooks/useHead'
-import RegisterNewUser from './RegisterNewUser'
+import React from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
+import RegisterNewUser from './RegisterNewUser';
 import LoginUser from './LoginUser';
 import Button from '../../components/Button';
-import { LoginAnimateToRight, ForgotPassword, Subtitle, LoginImage } from './login.styles'
-import Title from '../../components/Title'
+import { LoginAnimateToRight, ForgotPassword, Subtitle, LoginImage } from './login.styles';
+import Title from '../../components/Title';
+import RecoverPassword from './RecoverPassword';
 
 const Login	= () => {
-    useHead('Login')
+    
     return (
         <div style={{display: 'flex'}}>
         <LoginImage />
@@ -16,7 +16,7 @@ const Login	= () => {
             <Title>Login</Title>
                 <Routes>
                     <Route path='/' element={<LoginUser />} />
-                    <Route path='recuperar-senha' element={<p>Rota para recuperar senha</p>} />
+                    <Route path='recuperar-senha' element={<RecoverPassword />} />
                     <Route path='cadastro' element={<RegisterNewUser />} />
                 </Routes>
                 <>

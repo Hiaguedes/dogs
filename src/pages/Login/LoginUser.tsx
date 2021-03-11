@@ -5,7 +5,8 @@ import { routes } from '../../utils/apiRoute';
 import useFetch from '../../hooks/useFetch';
 import useForm from '../../hooks/useForm';
 import { useLoginContext } from '../../contexts/LoginContext';
-import { createBrowserHistory } from 'history'
+import { createBrowserHistory } from 'history';
+import useHead from '../../hooks/useHead'
 
 const LoginUser = () => {
     const initialState = {
@@ -17,6 +18,7 @@ const LoginUser = () => {
     const [ value, erro , Change, validate  ] = useForm(initialState);
     const { username, password } = value;
     const history = createBrowserHistory();
+    useHead('Login')
 
 
     const handleSubmit = (e: any) => {
