@@ -10,7 +10,7 @@ import Title from '../../components/Title'
 const Login	= () => {
     useHead('Login')
     return (
-        <div style={{display: 'flex', overflowX: 'hidden'}}>
+        <div style={{display: 'flex'}}>
         <LoginImage />
         <LoginAnimateToRight>
             <Title>Login</Title>

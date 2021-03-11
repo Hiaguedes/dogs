@@ -28,6 +28,7 @@ const GlobalStyle = createGlobalStyle<GlobalStylesProps>`
         max-height: 100%;
         background-color: ${({theme}) => theme.bg};
         color: ${({theme}) => theme.color};
+        overflow: hidden;
     }
 
     ul, li {

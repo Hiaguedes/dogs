@@ -18,8 +18,8 @@ export const LoginAnimateToRight = styled.div`
     max-width: 30rem;
     padding: 0 2rem;
     width: calc(50% - 4rem);
-    z-index: -1;
     margin: 0 auto;
+    overflow: hidden;
 `;
 
 export const ForgotPassword = styled.p`
@@ -65,7 +65,7 @@ export const Subtitle = styled.h3`
 
 export const LoginImage = styled.div`
     width: 45%;
-    height: 100vh;
+    height: calc(100vh - 3rem );
     overflow: hidden;
     background: url(${LoginImageBackground}) no-repeat center;
     background-size: cover;
