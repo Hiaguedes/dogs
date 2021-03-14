@@ -1,6 +1,6 @@
 const apiRoute = 'https://dogsapi.origamid.dev/json'
 
-export const routes = { 
+export const loginRoutes = { 
     TokenPost: {
         url: `${apiRoute}/jwt-auth/v1/token`,
         options: (body: any) => {

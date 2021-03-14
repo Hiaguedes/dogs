@@ -1,10 +1,11 @@
 import React from 'react';
 import useFetch from '../hooks/useFetch';
-import { routes } from '../utils/apiRoute';
+import { loginRoutes  } from '../utils/apiRoute';
 import { createBrowserHistory } from 'history'
 
 const initialState = {
     token: '',
+    isLogged: false,
     userData: {
         id: '',
         username: '',
@@ -14,9 +15,11 @@ const initialState = {
     setLoginToken: (token: string) => {},
     setUser: (objUser: {}) => {},
     logOut: () => {},
+    setLogged: () => {},
 }
 interface DefaultProps {
     token: string;
+    isLogged: boolean;
     userData: {
         id: string,
         username: string,
@@ -26,6 +29,7 @@ interface DefaultProps {
     setLoginToken: (token: string) => void;
     setUser: (objUser: {}) => void;
     logOut: () => void;
+    setLogged: any;
 }
 
 interface LoginProviderProps {
@@ -37,6 +41,7 @@ const LoginContext = React.createContext<DefaultProps>(initialState);
 const LoginProvider = ({children}: LoginProviderProps) => {
     const { request } = useFetch();
     const [token, setToken] =React.useState('');
+    const [ isLogged, setLogged ] = React.useState(false);
     const [userData, setUserData] = React.useState({
         id: '',
         username: '',
@@ -55,6 +60,7 @@ const LoginProvider = ({children}: LoginProviderProps) => {
 
     const logOut = () => {
         setToken('');
+        setLogged(false);
         setUserData({
             id: '',
             username: '',
@@ -70,7 +76,7 @@ const LoginProvider = ({children}: LoginProviderProps) => {
 
         if(appToken) {
             try {
-                request(routes.validateToken.url, routes.validateToken.options(appToken))
+                request(loginRoutes.validateToken.url, loginRoutes.validateToken.options(appToken))
                 .then((res: {response: any}) => {
                     if(!res.response.ok as boolean) {
                         logOut();
@@ -78,8 +84,9 @@ const LoginProvider = ({children}: LoginProviderProps) => {
                         return
                     };
                     setLoginToken(appToken);
-                    request(routes.getUser.url,routes.getUser.options(appToken)).then(res => {
+                    request(loginRoutes.getUser.url,loginRoutes.getUser.options(appToken)).then(res => {
                         setUser(res.json)
+                        setLogged(true)
                         history.push('/home')
                     })
                 })
@@ -94,7 +101,7 @@ const LoginProvider = ({children}: LoginProviderProps) => {
     }, [request])
 
     return(
-        <LoginContext.Provider value={{token, setLoginToken, userData ,setUser, logOut}}>
+        <LoginContext.Provider value={{token, setLoginToken, userData ,setUser, logOut, isLogged, setLogged}}>
             {children}
         </LoginContext.Provider>
     )

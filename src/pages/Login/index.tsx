@@ -4,7 +4,6 @@ import RegisterNewUser from './RegisterNewUser';
 import LoginUser from './LoginUser';
 import Button from '../../components/Button';
 import { LoginAnimateToRight, ForgotPassword, Subtitle, LoginImage } from './login.styles';
-import Title from '../../components/Title';
 import RecoverPassword from './RecoverPassword';
 
 const Login	= () => {
@@ -13,7 +12,7 @@ const Login	= () => {
         <div style={{display: 'flex'}}>
         <LoginImage />
         <LoginAnimateToRight>
-            <Title>Login</Title>
+           
                 <Routes>
                     <Route path='/' element={<LoginUser />} />
                     <Route path='recuperar-senha' element={<RecoverPassword />} />
