@@ -7,7 +7,7 @@ const Title = styled.h2`
     font-size: 3rem;
     margin: 1rem 0;
     position: relative;
-    margin-bottom: 3rem;
+    margin: 2rem 0;
     position: relative;
 
     ::before {

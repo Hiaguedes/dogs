@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './utils/theme';
 import Header from './components/Header'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ProtectedRoutes from './components/ProtectedRoutes'
+import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login';
 import LoginProvider from './contexts/LoginContext';
 import LandingPage from './pages/LandingPage';
@@ -24,7 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="login/*" element={<Login /> }/>
-            <ProtectedRoutes path="home/*" element={<Home />}/>
+            <ProtectedRoute path="home/*" element={<Home />}/>
             <Route path="*" element={<PageNotFound /> }/>
           </Routes>
         </BrowserRouter>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useLoginContext } from '../../contexts/LoginContext';
 import { Navigate, Route } from 'react-router-dom';
 
-const ProtectedRoutes = ({...props}) => {
+const ProtectedRoute = ({...props}) => {
     const { isLogged } = useLoginContext();
 
     return isLogged ? (
@@ -12,4 +12,4 @@ const ProtectedRoutes = ({...props}) => {
     )
 }
 
-export default ProtectedRoutes;
+export default ProtectedRoute;

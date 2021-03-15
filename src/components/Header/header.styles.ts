@@ -25,7 +25,7 @@ const NavItem = styled.div<NavItemProps>`
     align-items: center;
 
     ${({name}) =>
-    name === 'login' &&
+    name  &&
     css`
         ::after {
             content: '';

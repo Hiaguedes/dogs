@@ -1,9 +1,10 @@
-import useHead from '../../hooks/useHead'
+import useHead from '../../hooks/useHead';
+import HomeHeader from './HomeHeader'
 
 const Home = () => {
     useHead('Home')
     return(
-        <h2>Home</h2>
+        <HomeHeader />
     )
 }
 
