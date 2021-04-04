@@ -5,20 +5,53 @@ import Estatisticas from '../Estatisticas';
 import Feed from '../Feed';
 import { HomeHeaderStyles } from './homeHeader.styles';
 import { useLoginContext } from '../../../contexts/LoginContext'
+import useMedia from '../../../hooks/useMedia'
 
-import LogoutImage from '../../../assets/sair.svg'
-import StatisticsImage from '../../../assets/estatisticas.svg';
-import FeedImage from '../../../assets/feed.svg';
+import { ReactComponent as LogoutImage } from '../../../assets/sair.svg'
+import {  ReactComponent as StatisticsImage  } from '../../../assets/estatisticas.svg';
+import { ReactComponent as FeedImage } from '../../../assets/feed.svg';
 
 type mapObjects = {
     [key: string]: string
 }
 
 const HomeHeader = () => {
-    const { HomeHeaderContainer, HomeHeaderLink, HomeHeaderButton } = HomeHeaderStyles;
+    const { HomeHeaderContainer, HomeHeaderLink, HomeHeaderButton, MenuIcon, NavMobile } = HomeHeaderStyles;
     const [title, setTitle] = React.useState('Feed');
+    const [mobileMenu, setMobileMenu] = React.useState(false);
     const { logOut } = useLoginContext();
     const location = useLocation();
+    const mobile = useMedia('(max-width: 40rem)');
+
+    const MenuOptions = () => {
+        return (
+            <>
+                        <Link to="">
+                <HomeHeaderLink>
+
+                <HomeHeaderButton mobile={mobile} onClick={() => console.log('feed')}>
+                    <FeedImage />
+                    {mobile && <p>Feed</p>}
+                </HomeHeaderButton>
+
+                </HomeHeaderLink>
+            </Link>
+            <Link to="estatisticas">     
+                <HomeHeaderLink>
+                <HomeHeaderButton mobile={mobile} onClick={() => console.log('estatisticas')}>
+                    <StatisticsImage />
+                    {mobile && <p>Estatísticas</p>}
+                </HomeHeaderButton>
+                </HomeHeaderLink>
+            </Link>
+
+            <HomeHeaderButton mobile={mobile} onClick={() => logOut()}>
+                <LogoutImage />
+                {mobile && <p>Logout</p>}
+            </HomeHeaderButton>
+            </>
+        )
+    }
 
     const handleLocation = (location: string) => {
         const mapTitle : mapObjects = {
@@ -30,7 +63,8 @@ const HomeHeader = () => {
     }
 
     React.useEffect(() => {
-        handleLocation(location.pathname)
+        handleLocation(location.pathname);
+        setMobileMenu(false)
     }, [location.pathname])
 
     return(
@@ -38,20 +72,23 @@ const HomeHeader = () => {
     <div style={{display: 'flex', justifyContent: 'center'}}>
         <HomeHeaderContainer>
         <Title>{title}</Title>
-        <div style={{display: 'flex', alignItems: 'center'}}>
-            <Link to="">
-                <HomeHeaderLink>
-                <HomeHeaderButton onClick={() => console.log('feed')} src={FeedImage} />
-                </HomeHeaderLink>
-            </Link>
-            <Link to="estatisticas">     
-                <HomeHeaderLink>
-                <HomeHeaderButton onClick={() => console.log('estatisticas')} src={StatisticsImage} />
-                </HomeHeaderLink>
-            </Link>
-
-            <HomeHeaderButton onClick={() => logOut()} src={LogoutImage} />
+        {mobile ? (
+            <div style={{position: 'relative'}}>
+                <HomeHeaderButton mobile={false} onClick={() => {console.log('menu'); setMobileMenu(!mobileMenu)}}>
+                    <MenuIcon active={mobileMenu}/>
+                </HomeHeaderButton>
+                {mobileMenu && <>
+                    <NavMobile>
+                        {MenuOptions()}
+                    </NavMobile>
+                </>}
+            </div>
+        ) : <> 
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                    {MenuOptions()}
         </div>
+        </>}
+
         </HomeHeaderContainer>
     </div>
         <Routes>
